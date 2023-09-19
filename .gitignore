@@ -1,0 +1,23 @@
+# Archivos y carpetas relacionadas a virtual environment
+*/Lib/
+*/Scripts/
+*/Include/
+*/share/
+*/pyvenv.cfg
+*/.python-version
+
+
+# lab1
+# Ignora la carpeta videos
+videos
+# Ignora todos los archivos de texto
+*.txt
+# Exceptuamos el archivo 171.txt
+!texts/171.txt
+
+
+# lab3
+lab3/images_lab/
+lab3/secuencia_plaza/
+lab3/*.gif
+lab3/*.pdf

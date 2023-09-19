@@ -1,7 +1,0 @@
-# Ignora la carpeta videos
-videos
-
-# Ignora todos los archivos de texto
-*.txt
-# Exceptuamos el archivo 171.txt
-!texts/171.txt

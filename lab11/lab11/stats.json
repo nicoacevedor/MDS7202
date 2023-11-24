@@ -1,0 +1,1 @@
+{"companies": {"rows": 77096, "columns": 5, "file_size": 551406}, "shuttles": {"rows": 77096, "columns": 13, "file_size": 1237743}, "reviews": {"rows": 77096, "columns": 10, "file_size": 934637}, "companies_prep": {"rows": 77096, "columns": 5, "file_size": 550616}, "shuttles_prep": {"rows": 77096, "columns": 13}, "data_prepared": {"rows": 10000, "columns": 9}}

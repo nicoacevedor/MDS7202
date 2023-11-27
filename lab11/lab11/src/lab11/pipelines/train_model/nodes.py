@@ -2,12 +2,18 @@
 This is a boilerplate pipeline 'train_model'
 generated using Kedro 0.18.14
 """
+from datetime import datetime
 import logging
 from typing import Dict
 
 import mlflow
 import pandas as pd
+from lightgbm import LGBMRegressor
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error
+from sklearn.svm import SVR
+from xgboost import XGBRegressor
 
 
 def split_data(data: pd.DataFrame, params: Dict):
@@ -42,9 +48,58 @@ def get_best_model(experiment_id):
     return best_model
 
 
-# TODO: completar train_model
 def train_model(X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Series, y_valid: pd.Series):
-    pass
+    lr = LinearRegression()
+    rf = RandomForestRegressor()
+    svr = SVR()
+    xgbr = XGBRegressor()
+    lgbmr = LGBMRegressor()
+
+    lr.fit(X_train, y_train)
+    rf.fit(X_train, y_train)
+    svr.fit(X_train, y_train)
+    xgbr.fit(X_train, y_train)
+    lgbmr.fit(X_train, y_train)
+
+    now = datetime.now().strftime("%d_%m_%y_%H_%M_%S")
+    experiment_name = f"experiment_{now}"
+    mlflow.create_experiment(name=experiment_name)
+    experiment_id = dict(mlflow.get_experiment_by_name(experiment_name))['experiment_id']
+    mlflow.autolog()
+
+    with mlflow.start_run(run_name="LR", experiment_id=experiment_id):
+        y_pred = lr.predict(X_valid)
+        mlflow.log_metric("valid_mae", mean_absolute_error(y_valid, y_pred))
+        mlflow.log_params(lr.get_params())
+        mlflow.sklearn.log_model(lr, "model")
+
+    with mlflow.start_run(run_name="RF", experiment_id=experiment_id):
+        y_pred = rf.predict(X_valid)
+        mlflow.log_metric("valid_mae", mean_absolute_error(y_valid, y_pred))
+        mlflow.log_params(rf.get_params())
+        mlflow.sklearn.log_model(rf, "model")
+
+
+    with mlflow.start_run(run_name="SVR", experiment_id=experiment_id):
+        y_pred = svr.predict(X_valid)
+        mlflow.log_metric("valid_mae", mean_absolute_error(y_valid, y_pred))
+        mlflow.log_params(svr.get_params())
+        mlflow.sklearn.log_model(svr, "model")
+
+    with mlflow.start_run(run_name="XGB", experiment_id=experiment_id):
+        y_pred = xgbr.predict(X_valid)
+        mlflow.log_metric("valid_mae", mean_absolute_error(y_valid, y_pred))
+        mlflow.log_params(xgbr.get_params())
+        mlflow.sklearn.log_model(xgbr, "model")
+
+    with mlflow.start_run(run_name="LGBM", experiment_id=experiment_id):
+        y_pred = lgbmr.predict(X_valid)
+        mlflow.log_metric("valid_mae", mean_absolute_error(y_valid, y_pred))
+        mlflow.log_params(lgbmr.get_params())
+        mlflow.sklearn.log_model(lgbmr, "model")
+
+    return get_best_model(experiment_id)
+
 
 
 def evaluate_model(model, X_test: pd.DataFrame, y_test: pd.Series):

@@ -1,56 +1,56 @@
-# Here you can define all your data sets by using simple YAML syntax.
+# Hcompaniesere you can define all your data sets by using simple YAML syntax.
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://docs.kedro.org/en/stable/data/data_catalog.html
 
 companies:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/01_raw/companies.parquet
 
 shuttles:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/01_raw/shuttles.parquet
 
 reviews:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/01_raw/reviews.parquet
 
 companies_prep:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/02_intermediate/companies_prep.parquet
 
 shuttle_prep:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/02_intermediate/shuttles_prep.parquet
 
 prepared_data:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/03_primary/prepared_data.parquet
 
 X_train:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/05_model_input/X_train.parquet
 
 X_valid:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/05_model_input/X_valid.parquet
 
 X_test:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/05_model_input/X_test.parquet
 
 y_train:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/05_model_input/y_train.parquet
 
 y_valid:
-  type: pandas.ParquetDataSet
+  type: pandas.ParquetDataset
   filepath: data/05_model_input/y_valid.parquet
 
 y_test:
-  type: pandas.ParquetDataSet
-  filepath: data/05_model_input/X_test.parquet
+  type: pandas.ParquetDataset
+  filepath: data/05_model_input/y_test.parquet
 
 best_model:
-  type: pickle.PickleDataSet
+  type: pickle.PickleDataset
   filepath: data/06_models/best_model.pickle

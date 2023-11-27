@@ -2,8 +2,8 @@
 This is a boilerplate pipeline 'train_model'
 generated using Kedro 0.18.14
 """
-from datetime import datetime
 import logging
+from datetime import datetime
 from typing import Dict
 
 import mlflow
@@ -48,7 +48,9 @@ def get_best_model(experiment_id):
     return best_model
 
 
-def train_model(X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Series, y_valid: pd.Series):
+def train_model(
+    X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Series, y_valid: pd.Series
+):
     lr = LinearRegression()
     rf = RandomForestRegressor()
     svr = SVR()
@@ -64,7 +66,8 @@ def train_model(X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Series
     now = datetime.now().strftime("%d_%m_%y_%H_%M_%S")
     experiment_name = f"experiment_{now}"
     mlflow.create_experiment(name=experiment_name)
-    experiment_id = dict(mlflow.get_experiment_by_name(experiment_name))['experiment_id']
+    actual_experiment = dict(mlflow.get_experiment_by_name(experiment_name))
+    experiment_id = actual_experiment["experiment_id"]
     mlflow.autolog()
 
     with mlflow.start_run(run_name="LR", experiment_id=experiment_id):
@@ -78,7 +81,6 @@ def train_model(X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Series
         mlflow.log_metric("valid_mae", mean_absolute_error(y_valid, y_pred))
         mlflow.log_params(rf.get_params())
         mlflow.sklearn.log_model(rf, "model")
-
 
     with mlflow.start_run(run_name="SVR", experiment_id=experiment_id):
         y_pred = svr.predict(X_valid)
@@ -99,7 +101,6 @@ def train_model(X_train: pd.DataFrame, X_valid: pd.DataFrame, y_train: pd.Series
         mlflow.sklearn.log_model(lgbmr, "model")
 
     return get_best_model(experiment_id)
-
 
 
 def evaluate_model(model, X_test: pd.DataFrame, y_test: pd.Series):

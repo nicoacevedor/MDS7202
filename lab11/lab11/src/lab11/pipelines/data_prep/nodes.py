@@ -18,9 +18,13 @@ def _parse_money(x: pd.Series) -> pd.Series:
 
 
 def get_data():
-    companies = pd.read_csv("https://raw.githubusercontent.com/MDS7202/lab_11/main/companies.csv")
+    companies = pd.read_csv(
+        "https://raw.githubusercontent.com/MDS7202/lab_11/main/companies.csv"
+    )
     shuttles = pd.read_excel("https://github.com/MDS7202/lab_11/raw/main/shuttles.xlsx")
-    reviews = pd.read_csv("https://raw.githubusercontent.com/MDS7202/lab_11/main/reviews.csv")
+    reviews = pd.read_csv(
+        "https://raw.githubusercontent.com/MDS7202/lab_11/main/reviews.csv"
+    )
     return companies, shuttles, reviews
 
 
